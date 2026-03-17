@@ -1,22 +1,7 @@
-from flask import Flask, render_template
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
-
-
-# Connexion MongoDB
-client = MongoClient('mongodb://localhost:27017/')
-db = client['movies_db']
-movies_collection = db['movies']
-
-@app.route('/')
-def home():
-    movies = list(movies_collection.find())
-    return render_template('index.html', movies=movies)
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 # MongoDB
 client = MongoClient('mongodb://localhost:27017/')
@@ -66,5 +51,6 @@ def index():
                            films_a_decouvrir=films_a_decouvrir)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # ⚡ Serveur accessible depuis le réseau local
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
