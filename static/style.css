@@ -37,3 +37,118 @@ body {
     color: white;
     text-align: center;
 }
+    background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+}
+
+/* Navbar confortable */
+.transparent-navbar {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(10px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 66px;
+}
+
+.transparent-navbar .navbar-brand {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    padding: 0;
+    margin-right: 20px;
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.nav-bubble .bubble {
+    border-radius: 50px;
+    padding: 9px 20px;
+    margin-left: 16px;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 0.98rem;
+    line-height: 1;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.nav-bubble .bubble:hover {
+    background-color: rgba(255,255,255,0.4);
+    color: #000;
+}
+
+.navbar-toggler {
+    padding: 4px 8px;
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Blocs flous pour films récents / à venir avec images agrandies */
+.film-block {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 20px;  /* espace avec la barre de recherche */
+    margin-bottom: 20px;
+}
+
+.film-block h5 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.film-block img {
+    display: block;
+    margin: 0 auto 8px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    width: 140px;    /* images encore plus grandes */
+    height: 210px;   /* proportion 2:3 */
+    object-fit: cover;
+    cursor: pointer; /* indicateur cliquable */
+}
+
+/* Contenu principal */
+.content {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    min-height: 100vh;
+    backdrop-filter: blur(5px);
+}
+
+.card img {
+    object-fit: cover;
+    height: 250px;
+    cursor: pointer;
+}
+
+.card {
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.carousel-item img {
+    max-height: 450px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
