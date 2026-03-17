@@ -12,6 +12,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     min-height: 66px;
+    z-index: 1030; /* navbar au-dessus du reste */
 }
 
 .transparent-navbar .navbar-brand {
@@ -73,10 +74,10 @@ body {
     margin: 0 auto 8px auto;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    width: 140px;    /* images encore plus grandes */
-    height: 210px;   /* proportion 2:3 */
+    width: 140px;
+    height: 210px;
     object-fit: cover;
-    cursor: pointer; /* indicateur cliquable */
+    cursor: pointer;
 }
 
 /* Contenu principal */
