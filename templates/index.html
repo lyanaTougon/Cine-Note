@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>My Movies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>My Movies</h1>
+        <input type="text" placeholder="Rechercher...">
+    </nav>
+
+    <div class="main-container">
+        <!-- Barre de recherche à gauche -->
+        <aside class="sidebar">
+            <input type="text" placeholder="Rechercher un film...">
+        </aside>
+
+        <!-- Carrousel principal -->
+        <section class="carousel">
+            {% for movie in movies %}
+            <div class="carousel-item">
+                <img src="{{ movie['image_url'] }}" alt="{{ movie['title'] }}">
+                <h3>{{ movie['title'] }}</h3>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
