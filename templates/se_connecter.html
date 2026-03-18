@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Se connecter / Créer un compte - Ciné Note</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='se_connecter.css') }}">
+</head>
+<body id="body">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg transparent-navbar fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Ciné Note 🎬</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- BOUTON RETOUR FIXÉ SOUS NAVBAR -->
+<a href="{{ url_for('index') }}" class="back-btn">&larr; Retour</a>
+
+<div style="height:65px;"></div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="auth-card p-4 rounded shadow-lg">
+    <h2 class="text-center mb-4">Bienvenue sur Ciné Note</h2>
+
+    <!-- TABS -->
+    <ul class="nav nav-tabs mb-3" id="authTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Se connecter</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">Créer un compte</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="authTabContent">
+      <!-- LOGIN -->
+      <div class="tab-pane fade show active" id="login" role="tabpanel">
+        <form method="POST" action="{{ url_for('se_connecter') }}">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="loginPassword" name="password" required>
+          </div>
+          <button type="submit" class="btn auth-btn w-100">Se connecter</button>
+        </form>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="tab-pane fade" id="register" role="tabpanel">
+        <form method="POST" action="{{ url_for('creer_compte') }}">
+          <div class="mb-3">
+            <label for="registerName" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="registerName" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="registerEmail" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="registerPassword" name="password" required>
+          </div>
+          <button type="submit" class="btn auth-btn w-100">Créer un compte</button>
+        </form>
+      </div>
+    </div>
+
+    {% if error %}
+    <p class="text-center mt-3 text-warning">{{ error }}</p>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

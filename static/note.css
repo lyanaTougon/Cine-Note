@@ -1,0 +1,166 @@
+/* ==== GLOBAL ==== */
+body {
+    color: #eaeaea;
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4b5e97, #210c34);
+    transition: background 1s ease-in-out;
+}
+
+/* ==== NAVBAR ==== */
+.transparent-navbar {
+    background-color: rgba(0,0,0,0.12);
+    backdrop-filter: blur(3px);
+    padding: 3px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #eaeaea;
+}
+
+.nav-bubble .bubble {
+    border-radius: 50px;
+    padding: 5px 14px;
+    margin-left: 8px;
+    background-color: rgba(255,255,255,0.04);
+    color: #dcdcdc;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+}
+
+.nav-bubble .bubble:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: #ffffff;
+    transform: scale(1.03);
+}
+
+.nav-bubble .btn {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 50px;
+    background: rgba(75, 0, 130, 0.4);
+    border: none;
+}
+
+.nav-bubble .btn:hover {
+    background: rgba(75, 0, 130, 0.6);
+}
+
+/* ==== TOP 5 CARDS avec liseré violet ==== */
+.top5-card {
+    background-color: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+
+    /* Liseré violet */
+    border: 2px solid rgba(138,43,226,0.8);
+}
+
+.top5-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(138,43,226,0.7); /* glow violet */
+    border-color: rgba(138,43,226,1);
+}
+
+.top5-card img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+}
+
+.top5-card .card-body {
+    padding: 0.6rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.top5-card .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.card-note {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffdc00;
+}
+
+.top-rank {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(75,0,130,0.8);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==== BOUTON VOIR PLUS ==== */
+.carousel-btn {
+    font-weight: 600;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.carousel-btn:hover {
+    background: rgba(255,255,255,1);
+}
+
+/* ==== COMMENTAIRES ==== */
+.comment {
+    background-color: rgba(255,255,255,0.05);
+    color: #eaeaea;
+    border: 2px solid rgba(138,43,226,0.5); /* contour violet léger */
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+.comment:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(138,43,226,0.5); /* glow violet */
+    border-color: rgba(138,43,226,0.8);
+}
+
+/* ==== TITRES ==== */
+.top5-title, .discover-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 768px) {
+    .top5-card img {
+        height: 180px;
+    }
+
+    .top5-title, .discover-title {
+        font-size: 1.7rem;
+    }
+}

@@ -9,19 +9,38 @@
 </head>
 <body id="body">
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg transparent-navbar fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Ciné Note 🎬</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Ciné Note 🎬</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto nav-bubble">
-        <li class="nav-item"><a class="nav-link bubble" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link bubble" href="films/films.html">Film</a></li>
-        <li class="nav-item"><a class="nav-link bubble" href="#">Favoris</a></li>
-        <li class="nav-item"><a class="nav-link bubble" href="#">Note</a></li>
-        <li class="nav-item"><a class="nav-link bubble btn btn-primary text-white" href="#">Se connecter</a></li>
+        <li class="nav-item">
+          <a class="nav-link bubble" href="{{ url_for('index') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bubble" href="{{ url_for('films_page') }}">Films</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bubble" href="{{ url_for('favoris') }}">Favoris</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bubble" href="{{ url_for('note') }}">Note</a>
+        </li>
+        {% if 'user' in session %}
+        <li class="nav-item">
+          <a class="nav-link bubble btn btn-secondary text-white" href="{{ url_for('logout') }}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link bubble btn btn-primary text-white" href="{{ url_for('se_connecter') }}">Se connecter</a>
+        </li>
+        {% endif %}
       </ul>
     </div>
   </div>
@@ -109,7 +128,7 @@ const body = document.getElementById('body');
 function updateBackground() {
     const active = carousel.querySelector('.carousel-item.active');
     const color1 = active.getAttribute('data-color1') || '#0f0f1a';
-    const color2 = active.getAttribute('data-color2') || '#1a0033';
+    const color2 = active.getAttribute('data-color2') || '#1A0033';
     body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
 }
 

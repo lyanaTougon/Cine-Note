@@ -1,0 +1,66 @@
+body {
+    /* Dégradé diagonal violet foncé -> bleu foncé */
+    background: linear-gradient(135deg, #547394, #001F4D);
+    color: #eaeaea;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.card img:hover {
+    transform: scale(1.02);
+}
+
+.card-body .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 3px;
+}
+
+.card-genres {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.carousel-btn {
+    font-weight: 600;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+}
+
+.carousel-btn:hover {
+    background: rgba(255,255,255,1);
+}
