@@ -8,33 +8,56 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client['ma_base']
 collection = db['items']
 
-# Films pour carrousel
+# Films pour carrousel (images locales dans static/images/)
 films_carrousel = [
-    {"title": "Film 1", "image": "https://picsum.photos/800/400?random=1"},
-    {"title": "Film 2", "image": "https://picsum.photos/800/400?random=2"},
-    {"title": "Film 3", "image": "https://picsum.photos/800/400?random=3"},
-    {"title": "Film 4", "image": "https://picsum.photos/800/400?random=4"},
+    {
+        "title": "Scream 7",
+        "url": "/films/scream7",
+        "image": "scream7.webp",
+        "description": "Un film captivant plein de rebondissements.",
+        "color1": "#000000",  # noir
+        "color2": "#FF8C00"   # orange
+        
+    },
+    {
+        "title": "Suzume",
+        "url": "/films/suzume",
+        "image": "suzume.jpg",
+        "description": "Une jeune fille aventureuse part sauver des secrets mystiques.",
+        "color1": "#87CEFA",  # bleu clair
+        "color2": "#1E90FF"   # bleu foncé
+    },
+{
+    "title": "Ballerina",
+    "url": "/films/ballerina",
+    "image": "ballerina.webp",
+    "description": "Une tueuse redoutable formée dans l’ombre cherche à se venger dans un monde impitoyable.",
+        "color1": "#9370DB",  # violet clair
+        "color2": "#1A0033"   # violet foncé
+},
+
 ]
 
-# Films récents et à venir
+# Films récents
 films_recents = [
-    {"title": "Film Récent 1", "image": "https://picsum.photos/200/300?random=5"},
-    {"title": "Film Récent 2", "image": "https://picsum.photos/200/300?random=6"},
-    {"title": "Film Récent 3", "image": "https://picsum.photos/200/300?random=7"},
+    {"title": "Film Récent 1", "url": "/films/recent1", "image": "recent1.jpg"},
+    {"title": "Film Récent 2", "url": "/films/recent2", "image": "recent2.jpg"},
+    {"title": "Film Récent 3", "url": "/films/recent3", "image": "recent3.jpg"},
 ]
 
+# Films à venir
 films_avenir = [
-    {"title": "Film A Venir 1", "image": "https://picsum.photos/200/300?random=8"},
-    {"title": "Film A Venir 2", "image": "https://picsum.photos/200/300?random=9"},
-    {"title": "Film A Venir 3", "image": "https://picsum.photos/200/300?random=10"},
+    {"title": "Film A Venir 1", "url": "/films/avenir1", "image": "avenir1.jpg"},
+    {"title": "Film A Venir 2", "url": "/films/avenir2", "image": "avenir2.jpg"},
+    {"title": "Film A Venir 3", "url": "/films/avenir3", "image": "avenir3.jpg"},
 ]
 
 # Films à découvrir
 films_a_decouvrir = [
-    {"title": "Film Découvrir 1", "image": "https://picsum.photos/150/220?random=11"},
-    {"title": "Film Découvrir 2", "image": "https://picsum.photos/150/220?random=12"},
-    {"title": "Film Découvrir 3", "image": "https://picsum.photos/150/220?random=13"},
-    {"title": "Film Découvrir 4", "image": "https://picsum.photos/150/220?random=14"},
+    {"title": "Film Découvrir 1", "url": "/films/decouvrir1", "image": "decouvrir1.jpg"},
+    {"title": "Film Découvrir 2", "url": "/films/decouvrir2", "image": "decouvrir2.jpg"},
+    {"title": "Film Découvrir 3", "url": "/films/decouvrir3", "image": "decouvrir3.jpg"},
+    {"title": "Film Découvrir 4", "url": "/films/decouvrir4", "image": "decouvrir4.jpg"},
 ]
 
 @app.route('/', methods=['GET', 'POST'])
@@ -51,6 +74,4 @@ def index():
                            films_a_decouvrir=films_a_decouvrir)
 
 if __name__ == '__main__':
-    # ⚡ Serveur accessible depuis le réseau local
     app.run(host="0.0.0.0", port=5000, debug=True)
-

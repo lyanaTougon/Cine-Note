@@ -1,116 +1,198 @@
+/* ==== GLOBAL ==== */
 body {
-    background: url('https://picsum.photos/1920/1080') no-repeat center center fixed;
-    background-size: cover;
     color: #fff;
     margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
 }
 
-/* Navbar confortable */
+/* ==== NAVBAR COMPACTE ET LÉGÈRE ==== */
 .transparent-navbar {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(10px);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    min-height: 66px;
-    z-index: 1030; /* navbar au-dessus du reste */
+    background-color: rgba(0,0,0,0.2);   /* moins noir */
+    backdrop-filter: blur(6px);           /* moins flou */
+    padding: 4px 0;                       
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3); 
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 1030;
 }
 
-.transparent-navbar .navbar-brand {
-    font-size: 1.2rem;
-    line-height: 1.2;
-    padding: 0;
-    margin-right: 20px;
+.navbar-brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-.navbar-nav {
-    align-items: center;
-}
+.navbar-brand:hover { color: #00bfff; }
+
+.navbar-toggler { padding: 2px 4px; }
 
 .nav-bubble .bubble {
     border-radius: 50px;
-    padding: 9px 20px;
-    margin-left: 16px;
-    background-color: rgba(255,255,255,0.2);
+    padding: 4px 14px;
+    margin-left: 10px;
+    background-color: rgba(0,0,0,0.15);   /* moins noir */
     color: #fff;
-    font-size: 0.98rem;
-    line-height: 1;
-    transition: all 0.3s;
     font-weight: 500;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
 .nav-bubble .bubble:hover {
-    background-color: rgba(255,255,255,0.4);
-    color: #000;
+    background-color: rgba(0,0,0,0.35);
+    color: #00bfff;
+    transform: scale(1.05);
 }
 
-.navbar-toggler {
-    padding: 4px 8px;
-}
-
-/* Sidebar */
+/* ==== SIDEBAR LÉGÈRE ==== */
 .sidebar {
     height: 100vh;
-    padding: 20px;
+    padding: 25px;
+    background-color: rgba(0,0,0,0.25);   /* moins noir */
+    backdrop-filter: blur(6px);           /* moins flou */
+    border-radius: 15px;
 }
 
-/* Blocs flous pour films récents / à venir avec images agrandies */
+/* ==== FILM BLOCK LÉGER ==== */
 .film-block {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    text-align: center;
+    background-color: rgba(0,0,0,0.2);    /* moins noir */
     padding: 15px;
     border-radius: 15px;
-    margin-top: 20px;  /* espace avec la barre de recherche */
-    margin-bottom: 20px;
+    margin: 20px 0;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.film-block h5 {
-    color: #fff;
-    margin-bottom: 10px;
+.film-block:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
 }
+
+.film-block h5 { color: #fff; margin-bottom: 10px; }
 
 .film-block img {
-    display: block;
-    margin: 0 auto 8px auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     width: 140px;
     height: 210px;
     object-fit: cover;
+    margin: 0 auto 8px;
+    border-radius: 10px;
     cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Contenu principal */
-.content {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    min-height: 100vh;
-    backdrop-filter: blur(5px);
+.film-block img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
+
+/* ==== CONTENT ==== */
+.content { padding: 25px; }
 
 .card img {
     object-fit: cover;
     height: 250px;
     cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 .card {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.1);
     color: #fff;
+    border-radius: 12px;
 }
 
-.card-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
-.card-text {
-    font-size: 0.8rem;
-    margin: 0;
-}
-
+/* ==== CAROUSEL ==== */
 .carousel-item img {
     max-height: 450px;
     object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+.carousel-item img:hover { transform: scale(1.02); }
+
+/* ==== CAPTION ==== */
+.custom-caption {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    text-align: left;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 65%;
+    color: #fff;
+}
+
+.custom-caption h5 {
+    font-size: 2rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    margin-bottom: 8px;
+}
+
+.custom-caption p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.6);
+}
+
+/* ==== BOUTON ==== */
+.carousel-btn {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 700;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
     cursor: pointer;
+}
+.carousel-btn:hover {
+    background-color: #00bfff;
+    color: #fff;
+}
+
+/* ==== FLÈCHES CAROUSEL ==== */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: background-color 0.3s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 50%, 50%;
+    filter: brightness(1.8);
+}
+
+/* ==== ANIMATION FLUIDE ==== */
+.carousel-inner {
+    transition: transform 0.8s ease-in-out;
+}
+
+/* Désactiver swipe sur mobile */
+.carousel {
+    touch-action: pan-y;
 }
