@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="bg-dark text-white">
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">🎛️ Dashboard Admin</h1>
+
+    <!-- STATS -->
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+            <div class="card bg-secondary text-white p-3">
+                <h4>👤 Utilisateurs</h4>
+                <p>{{ users|length }} utilisateurs inscrits</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card bg-secondary text-white p-3">
+                <h4>🎬 Films</h4>
+                <p>{{ films|length }} films disponibles</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="mb-4">
+        <a href="#films" class="btn btn-warning me-2">
+            🎬 Gérer les films
+        </a>
+        <a href="#users" class="btn btn-info me-2">
+            👥 Gérer les utilisateurs
+        </a>
+        <a href="{{ url_for('index') }}" class="btn btn-light">
+            ⬅ Retour au site
+        </a>
+    </div>
+
+    <!-- LISTE DES FILMS -->
+    <h3 id="films" class="mt-4">🎬 Gestion des films</h3>
+    <div class="list-group mb-2">
+        {% for film in films %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ film.title }}</span>
+            <div>
+                <!-- Convertir ObjectId en string avec |string -->
+                <a href="{{ url_for('edit_film', film_id=film._id|string) }}" class="btn btn-sm btn-primary me-1">Modifier</a>
+                <a href="{{ url_for('delete_film', film_id=film._id|string) }}" class="btn btn-sm btn-danger">Supprimer</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('add_film') }}" class="btn btn-success mt-2">➕ Ajouter un film</a>
+
+    <!-- LISTE DES UTILISATEURS -->
+    <h3 id="users" class="mt-4">👥 Gestion des utilisateurs</h3>
+    <div class="list-group">
+        {% for user in users %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ user.email }}</span>
+            <div>
+                {% if user.role != 'admin' %}
+                <a href="{{ url_for('make_admin', user_id=user._id|string) }}" class="btn btn-sm btn-warning me-1">Rendre admin</a>
+                {% endif %}
+                <a href="{{ url_for('delete_user', user_id=user._id|string) }}" class="btn btn-sm btn-danger">Supprimer</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

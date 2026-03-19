@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from pymongo import MongoClient
+from bson import ObjectId
 import hashlib
 
 app = Flask(__name__)
@@ -153,6 +154,9 @@ films_details = [
 }   
     
 ]
+for film in films_details:
+    if not films_collection.find_one({"id": film["id"]}):
+        films_collection.insert_one(film)
 
 # -------------------- ADMIN FIXE --------------------
 hashed_admin = hashlib.sha256("1234".encode()).hexdigest()
@@ -180,20 +184,35 @@ def films_page():
     featured_film = all_films[0]  # Le premier film de la liste
     all_genres = sorted({g for f in films_details for g in f.get("genres", [])})
     return render_template('films.html', films=all_films, featured_film=featured_film, all_genres=all_genres)
+
 @app.route('/se_connecter', methods=['GET','POST'])
 def se_connecter():
     error = None
-    if request.method=='POST':
+
+    if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         hashed = hashlib.sha256(password.encode()).hexdigest()
-        user = users_collection.find_one({"email": email, "password": hashed})
+
+        user = users_collection.find_one({
+            "email": email,
+            "password": hashed
+        })
+
         if user:
             session['user'] = email
-            session['role'] = user.get("role","user")
+            session['role'] = user.get("role", "user")
+
+            # 🔥 ADMIN → dashboard
+            if session['role'] == 'admin':
+                return redirect(url_for('admin_page'))
+
+            # 👤 USER NORMAL
             return redirect(url_for('index'))
+
         else:
             error = "Email ou mot de passe incorrect"
+
     return render_template('se_connecter.html', error=error)
 
 @app.route('/creer_compte', methods=['GET','POST'])
@@ -226,19 +245,38 @@ def favoris():
     favoris = user.get("favoris", [])
     return render_template('favoris.html', favoris=favoris)
 
+# -------------------- AFFICHER LA PAGE DES NOTES --------------------
 @app.route('/note')
 def note():
-    top5 = sorted(films_carrousel + films_recents + films_avenir + films_a_decouvrir, key=lambda x:x.get("note",0), reverse=True)[:5]
-    comments = list(comments_collection.find())
+    if 'user' not in session:
+        return redirect(url_for('se_connecter'))
+
+    # Récupère toutes les notes de l'utilisateur
+    comments = list(comments_collection.find({"user": session['user']}))
+    
+    # Récupère les films correspondants aux notes
+    top5 = []
+    for c in comments:
+        film = next((f for f in films_details if f["id"] == c["film"]), None)
+        if film:
+            top5.append(film)
+
     return render_template('note.html', top5=top5, comments=comments)
 
-@app.route('/admin')
-def admin_page():
-    if session.get('role') != 'admin':
-        return redirect(url_for('index'))
-    all_users = list(users_collection.find())
-    all_films = films_carrousel + films_recents + films_avenir + films_a_decouvrir
-    return render_template('admin.html', users=all_users, films=all_films)
+
+@app.route('/delete_note/<film_id>', methods=['POST'])
+def delete_note(film_id):
+    if 'user' not in session:
+        return redirect(url_for('se_connecter'))
+    
+    comments_collection.delete_one({
+        "user": session['user'],
+        "film": film_id
+    })
+    
+    flash("La note a été annulée. 🎬", "success")
+    return redirect(url_for('note'))
+
 
 # -------------------- FILM DETAIL --------------------
 @app.route('/films/<film_id>')
@@ -253,6 +291,8 @@ def film_detail(film_id):
         is_favori = any(f["id"] == film_id for f in user.get("favoris", []))
 
     return render_template("film_detail.html", film=film, is_favori=is_favori)
+
+
 # -------------------- FAVORIS --------------------
 @app.route('/toggle_favori/<film_id>')
 def toggle_favori(film_id):
@@ -297,6 +337,70 @@ def noter(film_name):
     })
 
     return redirect(request.referrer)
+
+
+# -------------------- ADMIN FILMS --------------------
+@app.route('/admin')
+def admin_page():
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+    all_users = list(users_collection.find())
+    all_films = list(films_collection.find())  # <- MongoDB
+    return render_template('admin/admin.html', users=all_users, films=all_films)
+
+
+@app.route('/admin/films/ajouter', methods=['GET','POST'])
+def add_film():
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        title = request.form['title']
+        films_collection.insert_one({"title": title})
+        return redirect(url_for('admin_page'))
+    return render_template('admin/add_film.html')
+
+
+@app.route('/admin/films/<film_id>/modifier', methods=['GET','POST'])
+def edit_film(film_id):
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+    film = films_collection.find_one({"_id": ObjectId(film_id)})
+    if request.method == 'POST':
+        new_title = request.form['title']
+        films_collection.update_one({"_id": ObjectId(film_id)}, {"$set": {"title": new_title}})
+        return redirect(url_for('admin_page'))
+    return render_template('admin/edit_film.html', film=film)
+
+
+@app.route('/admin/films/<film_id>/supprimer')
+def delete_film(film_id):
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+
+    films_collection.delete_one({"_id": ObjectId(film_id)})
+    return redirect(url_for('admin_page'))
+
+# -------------------- ADMIN USERS --------------------
+@app.route('/admin/users/<user_id>/make_admin')
+def make_admin(user_id):
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+
+    users_collection.update_one(
+        {"_id": ObjectId(user_id)},
+        {"$set": {"role": "admin"}}
+    )
+
+    return redirect(url_for('admin_page'))
+
+@app.route('/admin/users/<user_id>/delete')
+def delete_user(user_id):
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+
+    users_collection.delete_one({"_id": ObjectId(user_id)})
+    return redirect(url_for('admin_page'))
+
 
 # -------------------- RUN --------------------
 if __name__ == '__main__':

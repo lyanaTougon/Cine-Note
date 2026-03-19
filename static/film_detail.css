@@ -14,7 +14,6 @@
     object-fit: cover;
     transition: transform 0.3s ease;
 }
-
 .film-img:hover {
     transform: scale(1.03);
 }
@@ -26,7 +25,6 @@
     margin-bottom: 0.3rem;
     color: #ffffff !important;
 }
-
 .genres {
     font-size: 1.1rem;
     margin-bottom: 10px;
@@ -46,19 +44,34 @@
     font-weight: 600;
 }
 
+/* ==== FORMULAIRE ÉTOILES HORIZONTAL ==== */
+.star-rating-form {
+    display: flex;
+    align-items: center;
+}
+.star-rating-form .stars {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.star-rating-form input[type="radio"] {
+    display: none;
+}
+.star-rating-form label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating-form input[type="radio"]:checked ~ label,
+.star-rating-form label:hover,
+.star-rating-form label:hover ~ label {
+    color: gold;
+}
+
 /* ==== RESPONSIVE ==== */
-@media (max-width: 1200px) {
-    .film-img { max-width: 100%; }
-}
-
 @media (max-width: 768px) {
-    .film-img { max-width: 100%; margin-bottom: 20px; }
-    .film-title { font-size: 2rem; }
-    .synopsis { font-size: 1.1rem; }
-}
-
-@media (max-width: 576px) {
-    .film-img { max-width: 100%; margin-bottom: 20px; }
-    .film-title { font-size: 1.8rem; }
-    .synopsis { font-size: 1rem; }
+    .star-rating-form {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
 }
