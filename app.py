@@ -14,36 +14,144 @@ comments_collection = db['comments']
 
 # -------------------- FILMS INIT --------------------
 films_carrousel = [
-    {"title": "Avatar 3", "url": "/films/avatar3", "image": "avatar3.jpeg",
+    {"id": "avatar3", "title": "Avatar 3", "url": "/films/avatar3", "image": "avatar3.jpeg",
      "description": "Jake Sully et Neytiri affrontent une nouvelle menace sur Pandora dans un monde encore plus spectaculaire.",
      "color1": "#000428", "color2": "#1A0033", "note": 9},
-  {
-  "title": "Wicked 1",
-  "url": "/films/wicked-1",
-  "image": "wicked1.jpg",
-  "description": "Une aventure magique dans un monde enchanteur.",
-  "color1": "#FF69B4",  
-  "color2": "#008000", 
-  "note": 9.0,
-},
-    {"title": "Ballerina", "url": "/films/ballerina", "image": "ballerina.webp",
+     
+    {"id": "wicked-1", "title": "Wicked 1", "url": "/films/wicked-1", "image": "wicked1.jpg",
+     "description": "Une aventure magique dans un monde enchanteur.",
+     "color1": "#FF69B4", "color2": "#008000", "note": 9.0},
+    {"id": "ballerina", "title": "Ballerina", "url": "/films/ballerina", "image": "ballerina.webp",
      "description": "Une tueuse redoutable formée dans l’ombre cherche à se venger dans un monde impitoyable.",
      "color1": "#9370DB", "color2": "#1A0033", "note": 8.2}
 ]
 
 films_recents = [
-    {"title": "Zootopie 2", "url": "/films/zootopie2", "image": "zootopie2_couv.jpg", "note": 8.8},
+    {"id": "zootopie2", "title": "Zootopie 2", "url": "/films/zootopie2", "image": "zootopie2_couv.jpg", "note": 8.8},
 ]
 
 films_avenir = [
-    {"title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp", "note": 8.7},
+    {"id": "parasite", "title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp", "note": 8.7},
 ]
 
 films_a_decouvrir = [
-    {"title": "Chainsawman", "url": "/films/chainsawman", "image": "chainsawman_couv.jpg", "genres": ["Action","Drame"], "note": 8.0},
-    {"title": "Spider-Verse", "url": "/films/spiderverse", "image": "spiderverse_couv.jpg", "genres": ["Action","Aventure"], "note": 8.3},
-    {"title": "Tenet", "url": "/films/tenet", "image": "tenet_couv.webp", "genres": ["Action","Drame"], "note": 7.9},
-    {"title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp", "genres": ["Action","Drame"], "note": 8.7}
+    {"id": "chainsawman", "title": "Chainsawman", "url": "/films/chainsawman", "image": "chainsawman_couv.jpg",
+     "genres": ["Action","Drame"], "note": 8.0},
+     {
+  "id": "robot_sauvage",
+  "title": "Robot Sauvage",
+  "url": "/films/robot-sauvage",
+  "image": "robotsauvage_couv.jpg",
+  "genres": ["Action", "Aventure"],
+  "note": 8.3
+},
+    
+    {"id": "tenet", "title": "Tenet", "url": "/films/tenet", "image": "tenet_couv.webp",
+     "genres": ["Action","Drame"], "note": 7.9},
+    {"id": "parasite2", "title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp",
+     "genres": ["Action","Drame"], "note": 8.7}
+]
+# -------------------- FILMS UNIQUE --------------------
+films_details = [
+
+    {
+    "id": "spiderverse",
+    "title": "Spider-Verse",
+    "image couv": "spiderverse_couv.jpg",
+    "image": "spiderverse.jpg",
+    "genres": ["Action", "Aventure"],
+    "description": "Miles Morales traverse différentes dimensions...",
+    "synopsis": "Miles Morales traverse différentes dimensions et rencontre de multiples versions de Spider-Man, tout en affrontant une nouvelle menace qui pourrait bouleverser tous les univers.",
+    "date": "2023",
+    "duree": "2h 20m",
+    "trailer": "https://youtu.be/cqGjhVJWtEg?si=nsgkGx8yo6X4BBQf"
+},
+    {
+        "id": "chainsawman",
+        "title": "Chainsawman",
+        "image": "chainsawman.webp",
+        "image couv": "chainsawman_couv.jpg",
+        "genres": ["Action", "Drame"],
+        "description": "Un jeune homme transformé en chasseur de démons.",
+        "synopsis": "Dans un monde où les démons rôdent, un jeune homme doit combattre pour survivre.",
+        "date": "2025",
+        "duree": "2h10",
+        "trailer": "https://youtu.be/d1n552v1ng0?si=7-K8r-QQeegbpWS4"
+    },
+    {
+        "id": "wicked1",
+        "title": "Wicked 1",
+        "image": "wicked1.jpg",
+        "image couv": "wicked1_couv.jpg",
+        "genres": ["Fantastique"],
+        "description": "Une aventure magique.",
+        "synopsis": "L’histoire des sorcières d’Oz avant Dorothy.",
+        "date": "2024",
+        "duree": "2h30",
+        "trailer": "https://youtu.be/6COmYeLsz4c?si=t4I5_-BD5fbsxb6r"
+        
+    },
+    {
+  "id": "avatar3",
+  "title": "Avatar : Fire and Ash",
+  "image": "avatar3_couv.jpg",
+  "image couv": "avatar3_couv.jpg",
+  "genres": ["Science‑fiction", "Aventure"],
+  "description": "Sur Pandora, Jake Sully et sa famille affrontent de nouvelles menaces et découvrent une tribu hostile.",
+  "synopsis": "Dans ce troisième volet de la franchise, Jake Sully, Neytiri et leur famille doivent faire face à l’alliance agressive d’une tribu Na’vi des Cendres tout en protégeant Pandora contre les forces humaines qui menacent leur monde.",
+  "date": "2025",
+  "duree": "3h 17m",
+  "trailer": "https://youtu.be/ouVuXBtxk9M?si=H2I7SZUEWFISb4WD"
+},
+{
+  "id": "robot_sauvage",
+  "title": "Le Robot sauvage",
+  "image": "robotsauvage_couv.jpg",
+  "image couv": "robotsauvage_couv.jpg",
+  "genres": ["Animation", "Aventure", "Famille"],
+  "description": "Un robot échoué sur une île déserte apprend à survivre et se lie d’amitié avec la faune locale.",
+  "synopsis": "Après un naufrage, Roz, un robot utilitaire, se retrouve seule sur une île inhabitée. Elle doit apprendre à s’adapter à son nouvel environnement hostile et finit par se lier d’amitié avec les animaux, notamment en adoptant un oison orphelin qu’elle nomme Joli‑Bec.",
+  "date": "2024",
+  "duree": "1h 42m",
+  "trailer": "https://youtu.be/Gn8QkmTtaTU?si=WF3zqEDpbK1yvJED"
+},
+{
+  "id": "tenet",
+  "title": "Tenet",
+  "image": "tenet_couv.jpg",
+    "image couv": "tenet_couv.jpg",
+  "genres": ["Action", "Science‑fiction", "Thriller"],
+  "description": "Un agent doit empêcher une guerre mondiale liée à une technologie qui inverse le temps.",
+  "synopsis": "Un protagoniste sans nom est recruté par une organisation mystérieuse appelée Tenet pour lutter contre une menace qui dépasse le cadre du temps traditionnel en utilisant la « inversion temporelle » afin d’arrêter une catastrophe mondiale imminente.",
+  "date": "2020",
+  "duree": "2h 30m",
+    "trailer": "https://youtu.be/NQ5p6WYYK-s?si=7MZf6AQVmquJVOnK"
+},
+    {
+        "id": "ballerina",
+        "title": "Ballerina",
+        "image": "ballerina.webp",
+            "image couv": "ballerina.webp",
+        "genres": ["Action", "Thriller"],
+        "description": "Une tueuse cherche vengeance.",
+        "synopsis": "Une assassine traque ceux qui ont détruit sa vie.",
+        "date": "2025",
+        "duree": "1h50",
+        "trailer": "hhttps://youtu.be/0FSwsrFpkbw?si=3Bmx4M3rqwfTo_y9"
+    },
+{
+  "id": "parasite",
+  "title": "Parasite",
+  "image": "parasite_couv.webp",
+    "image couv": "parasite_couv.webp",
+  "genres": ["Thriller", "Comédie noire"],
+  "description": "Une famille pauvre s’infiltre dans la vie d’une famille riche en se faisant passer pour des professionnels.",
+  "synopsis": "Ki‑taek, sa femme et leurs enfants vivent dans un sous‑sol humide. Quand leur fils Ki‑woo est engagé pour donner des cours particuliers chez une famille riche, ils élaborent progressivement un stratagème afin que tous puissent se faire embaucher et profiter du luxe de leurs employeurs, jusqu’à ce que leur plan dérape.",
+  "date": "2019",
+  "duree": "2h 12m",
+  "trailer": "https://youtu.be/isOGD_7hNIY?si=qT4yqZe4WEbXQQGw"
+}   
+    
 ]
 
 # -------------------- ADMIN FIXE --------------------
@@ -68,9 +176,10 @@ def index():
 
 @app.route('/films')
 def films_page():
-    all_films = films_carrousel + films_recents + films_avenir + films_a_decouvrir
-    return render_template('films.html', films=all_films)
-
+    all_films = films_details
+    featured_film = all_films[0]  # Le premier film de la liste
+    all_genres = sorted({g for f in films_details for g in f.get("genres", [])})
+    return render_template('films.html', films=all_films, featured_film=featured_film, all_genres=all_genres)
 @app.route('/se_connecter', methods=['GET','POST'])
 def se_connecter():
     error = None
@@ -130,6 +239,64 @@ def admin_page():
     all_users = list(users_collection.find())
     all_films = films_carrousel + films_recents + films_avenir + films_a_decouvrir
     return render_template('admin.html', users=all_users, films=all_films)
+
+# -------------------- FILM DETAIL --------------------
+@app.route('/films/<film_id>')
+def film_detail(film_id):
+    film = next((f for f in films_details if f["id"] == film_id), None)
+    if not film:
+        return "Film introuvable", 404
+
+    is_favori = False
+    if 'user' in session:
+        user = users_collection.find_one({"email": session['user']})
+        is_favori = any(f["id"] == film_id for f in user.get("favoris", []))
+
+    return render_template("film_detail.html", film=film, is_favori=is_favori)
+# -------------------- FAVORIS --------------------
+@app.route('/toggle_favori/<film_id>')
+def toggle_favori(film_id):
+    if 'user' not in session:
+        return redirect(url_for('se_connecter'))
+
+    user = users_collection.find_one({"email": session['user']})
+    film = next((f for f in films_details if f["id"] == film_id), None)
+    if not film:
+        return redirect(url_for('films_page'))
+
+    favoris = user.get("favoris", [])
+
+    if any(f["id"] == film_id for f in favoris):
+        # Retirer des favoris
+        users_collection.update_one(
+            {"email": session['user']},
+            {"$pull": {"favoris": {"id": film_id}}}
+        )
+    else:
+        # Ajouter aux favoris
+        users_collection.update_one(
+            {"email": session['user']},
+            {"$addToSet": {"favoris": film}}
+        )
+
+    return redirect(request.referrer or url_for('films_page'))
+
+
+# -------------------- NOTER --------------------
+@app.route('/noter/<film_name>', methods=['POST'])
+def noter(film_name):
+    if 'user' not in session:
+        return redirect(url_for('se_connecter'))
+
+    note = int(request.form.get('note'))
+
+    comments_collection.insert_one({
+        "film": film_name,
+        "user": session['user'],
+        "note": note
+    })
+
+    return redirect(request.referrer)
 
 # -------------------- RUN --------------------
 if __name__ == '__main__':

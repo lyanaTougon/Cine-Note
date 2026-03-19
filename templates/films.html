@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='films.css') }}">
 </head>
-<body id="body">
+<body id="body" data-user-connected="{% if 'user' in session %}true{% else %}false{% endif %}">
 
-<!-- NAVBAR IDENTIQUE À INDEX -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg transparent-navbar fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ url_for('index') }}">Ciné Note 🎬</a>
@@ -33,17 +33,55 @@
   </div>
 </nav>
 
-<div style="height:65px;"></div>
+<!-- IMAGE PRINCIPALE HERO -->
+<section class="hero-section d-flex align-items-end">
+    <img src="{{ url_for('static', filename='images/spiderverse.jpg') }}" alt="Spiderverse" class="hero-img" id="heroImg">
 
-<!-- CONTENU DE LA PAGE FILMS -->
+    <!-- Overlay pour texte et boutons -->
+    <div class="hero-overlay text-white p-4">
+        <h1 class="hero-title">{{ featured_film.title }}</h1>
+        <p class="hero-info">
+            {{ featured_film.date }} ‧ {{ featured_film.genres|join('/') }} ‧ {{ featured_film.duree }}
+        </p>
+        <p class="hero-synopsis">{{ featured_film.synopsis }}</p>
+
+        <!-- Hero buttons -->
+        <div class="hero-buttons mt-3">
+            <button class="btn btn-primary me-2"
+                    onclick="window.location.href='/films/{{ featured_film.id }}'">
+                Voir plus
+            </button>
+            <button class="btn btn-outline-light"
+                    onclick="addToFavorites('{{ featured_film.id }}')">
+                ❤️ Favoris
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- RECHERCHE ET FILTRE -->
 <div class="container mt-4">
-    <h2 class="page-title mb-3">Tous les Films</h2>
-    <div class="row">
+    <div class="row mb-3">
+        <div class="col-md-6 mb-2">
+            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un film...">
+        </div>
+        <div class="col-md-6 mb-2">
+            <select id="genreFilter" class="form-select">
+                <option value="">Tous les genres</option>
+                {% for genre in all_genres %}
+                <option value="{{ genre }}">{{ genre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- LISTE DES FILMS -->
+    <div class="row" id="filmsContainer">
         {% for film in films %}
         <div class="col-md-3 mb-4">
-            <div class="card h-100">
-                <a href="{{ film.url }}">
-                    <img src="{{ url_for('static', filename='images/' + film.image) }}" class="card-img-top" alt="{{ film.title }}">
+            <div class="card m-2 text-dark" style="width:180px;" data-genres="{{ film.genres|join(',') }}">
+                <a href="/films/{{ film.id }}">
+                    <img src="{{ url_for('static', filename='images/' + film['image couv']) }}" class="card-img-top" alt="{{ film.title }}">
                 </a>
                 <div class="card-body d-flex flex-column justify-content-between" style="height: 130px;">
                     <div>
@@ -52,7 +90,7 @@
                         <p class="card-genres">{{ film.genres|join(' • ') }}</p>
                         {% endif %}
                     </div>
-                    <button class="carousel-btn mt-2" onclick="window.location.href='{{ film.url }}'">Voir</button>
+                    <button class="carousel-btn mt-2" onclick="window.location.href='/films/{{ film.id }}'">Voir</button>
                 </div>
             </div>
         </div>
@@ -61,5 +99,58 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Récupérer si l'utilisateur est connecté depuis le body
+const userConnected = document.getElementById('body').dataset.userConnected === "true";
+
+// Fonction pour ajouter aux favoris
+function addToFavorites(filmId) {
+    if (userConnected) {
+        fetch(`/add_favoris/${filmId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Film ajouté aux favoris !');
+                } else {
+                    alert('Impossible d\'ajouter aux favoris.');
+                }
+            })
+            .catch(() => alert('Erreur serveur, veuillez réessayer.'));
+    } else {
+        alert('Veuillez vous connecter pour ajouter aux favoris.');
+    }
+}
+
+// Filtrage des films
+const searchInput = document.getElementById('searchInput');
+const genreFilter = document.getElementById('genreFilter');
+
+function filterFilms() {
+    const searchText = searchInput.value.toLowerCase();
+    const selectedGenre = genreFilter.value.toLowerCase();
+
+    document.querySelectorAll('.card').forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const genres = card.dataset.genres.toLowerCase();
+
+        if ((title.includes(searchText)) && (selectedGenre === '' || genres.includes(selectedGenre))) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+searchInput.addEventListener('input', filterFilms);
+genreFilter.addEventListener('change', filterFilms);
+
+// Parallax image hero
+const heroImg = document.getElementById('heroImg');
+window.addEventListener('scroll', () => {
+    const offset = window.pageYOffset;
+    heroImg.style.transform = `translateY(${offset * 0.3}px) scale(1.1)`;
+});
+</script>
+
 </body>
 </html>

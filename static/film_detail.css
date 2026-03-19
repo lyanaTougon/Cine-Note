@@ -1,0 +1,64 @@
+/* ==== FOND CINÉMA TRANSPARENT ==== */
+.film-detail-bg {
+    background: linear-gradient(to bottom right, rgba(10,10,30,0.5), rgba(0,0,0,0.6)), url("../images/background_cinema.jpg") no-repeat center center;
+    background-size: cover;
+    border-radius: 15px;
+}
+
+/* ==== IMAGE FILM ==== */
+.film-img {
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.film-img:hover {
+    transform: scale(1.03);
+}
+
+/* ==== TITRES ==== */
+.film-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #ffffff !important;
+}
+
+.genres {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #ffffff !important;
+}
+
+/* ==== SYNOPSIS ==== */
+.synopsis {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #ffffff !important;
+}
+
+/* ==== BOUTONS ==== */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1200px) {
+    .film-img { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .film-img { max-width: 100%; margin-bottom: 20px; }
+    .film-title { font-size: 2rem; }
+    .synopsis { font-size: 1.1rem; }
+}
+
+@media (max-width: 576px) {
+    .film-img { max-width: 100%; margin-bottom: 20px; }
+    .film-title { font-size: 1.8rem; }
+    .synopsis { font-size: 1rem; }
+}
