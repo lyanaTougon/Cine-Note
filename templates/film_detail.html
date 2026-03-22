@@ -66,6 +66,14 @@
         {% if film.genres %}
         <p class="genres text-white">{{ film.genres|join(' • ') }}</p>
         {% endif %}
+
+     <!-- NOTE MOYENNE UTILISATEURS -->
+{% if moyenne_note is defined and moyenne_note > 0 %}
+<p class="text-white mb-2 fw-bold">
+    Note moyenne ⭐: {{ moyenne_note|round(1) }}/5
+</p>
+{% endif %}
+
         <p class="text-white"><strong>Date :</strong> {{ film.date }}</p>
         <p class="text-white"><strong>Durée :</strong> {{ film.duree }}</p>
         <p class="synopsis text-white">{{ film.synopsis }}</p>
@@ -89,7 +97,7 @@
 
           <!-- FORMULAIRE NOTATION -->
           {% if 'user' in session %}
-          <form action="{{ url_for('noter', film_name=film.id) }}" method="POST" class="star-rating-form mb-2">
+          <form action="{{ url_for('noter', film_name=film.id) }}" method="POST" class="star-rating-form mb-2 d-flex align-items-center">
             <div class="stars">
               {% set user_note = 0 %}
               {% for comment in comments %}
@@ -115,6 +123,22 @@
 
     </div>
   </div>
+  <!-- VIDEO TRAILER -->
+{% if film.trailer %}
+<div class="container mt-4 mb-5">
+  <h5 class="text-white mb-2">🎬 Trailer officiel</h5>
+  <div class="ratio ratio-16x9">
+    <iframe src="{{ film.trailer
+                   |replace('youtu.be/', 'www.youtube.com/embed/')
+                   |replace('watch?v=', 'embed/') }}" 
+            title="Trailer {{ film.title }}" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+    </iframe>
+  </div>
+</div>
+{% endif %}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

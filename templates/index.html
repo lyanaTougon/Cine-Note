@@ -23,7 +23,7 @@
         <li class="nav-item"><a class="nav-link bubble" href="{{ url_for('favoris') }}">Favoris</a></li>
         <li class="nav-item"><a class="nav-link bubble" href="{{ url_for('note') }}">Note</a></li>
         {% if 'user' in session %}
-        <li class="nav-item"><a class="nav-link bubble btn btn-secondary text-white" href="{{ url_for('logout') }}">Logout</a></li>
+        <li class="nav-item"><a class="nav-link bubble btn btn-secondary text-white" href="{{ url_for('logout') }}">Se déconnecter</a></li>
         {% else %}
         <li class="nav-item"><a class="nav-link bubble btn btn-primary text-white" href="{{ url_for('se_connecter') }}">Se connecter</a></li>
         {% endif %}

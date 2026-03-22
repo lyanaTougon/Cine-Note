@@ -3,6 +3,7 @@
     background: linear-gradient(to bottom right, rgba(10,10,30,0.5), rgba(0,0,0,0.6)), url("../images/background_cinema.jpg") no-repeat center center;
     background-size: cover;
     border-radius: 15px;
+    padding: 40px 0;
 }
 
 /* ==== IMAGE FILM ==== */
@@ -48,6 +49,7 @@
 .star-rating-form {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 .star-rating-form .stars {
     display: flex;
@@ -66,6 +68,14 @@
 .star-rating-form label:hover,
 .star-rating-form label:hover ~ label {
     color: gold;
+}
+
+/* ==== NOTE MOYENNE ==== */
+.moyenne-note {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff !important; /* texte en blanc */
+    margin-left: 15px;
 }
 
 /* ==== RESPONSIVE ==== */

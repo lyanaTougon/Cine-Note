@@ -1,11 +1,95 @@
-<form method="POST">
-    <div class="mb-3">
-        <label for="title" class="form-label">Titre du film</label>
-        <input type="text" name="title" class="form-control" required>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ajouter un film</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-dark text-white">
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">➕ Ajouter un film</h1>
+
+    <div class="card bg-secondary p-4 shadow">
+
+        <form method="POST">
+
+            <!-- TITRE -->
+            <div class="mb-3">
+                <label class="form-label">Titre</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <!-- IMAGE -->
+            <div class="mb-3">
+                <label class="form-label">Image (affiche)</label>
+                <input type="text" name="image" class="form-control">
+            </div>
+
+            <!-- IMAGE COUV -->
+            <div class="mb-3">
+                <label class="form-label">Image couverture</label>
+                <input type="text" name="image_couv" class="form-control">
+            </div>
+
+            <!-- GENRES -->
+            <div class="mb-3">
+                <label class="form-label">Genres (séparés par virgule)</label>
+                <input type="text" name="genres" class="form-control" placeholder="Action, Comédie">
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+
+            <!-- SYNOPSIS -->
+            <div class="mb-3">
+                <label class="form-label">Synopsis</label>
+                <textarea name="synopsis" class="form-control"></textarea>
+            </div>
+
+            <!-- DATE -->
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="text" name="date" class="form-control">
+            </div>
+
+            <!-- DURÉE -->
+            <div class="mb-3">
+                <label class="form-label">Durée</label>
+                <input type="text" name="duree" class="form-control">
+            </div>
+
+            <!-- TRAILER -->
+            <div class="mb-3">
+                <label class="form-label">Lien du trailer</label>
+                <input type="text" name="trailer" class="form-control">
+            </div>
+
+            <!-- BOUTONS -->
+            <div class="d-flex justify-content-between">
+
+                <a href="{{ url_for('admin_page') }}" class="btn btn-light">
+                    ⬅ Retour
+                </a>
+
+                <button type="submit" class="btn btn-success">
+                    ➕ Ajouter
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
-    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea name="description" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Ajouter le film</button>
-</form>
+
+</div>
+
+</body>
+</html>

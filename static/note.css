@@ -1,4 +1,4 @@
-/* ===== BODY ===== */
+/* ================= BODY ================= */
 #body {
     background: linear-gradient(to bottom right, #350656, #4d1919);
     margin: 0;
@@ -7,61 +7,114 @@
     color: #fff;
 }
 
-/* ===== CARTES NOTES ===== */
-.note-card {
+/* ================= CARDS ================= */
+.card {
+    background-color: rgba(0,0,0,0.2); /* semi-transparent */
+    backdrop-filter: blur(10px);        /* effet verre flouté */
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-width: 220px;
+    margin: auto;
+    color: #fff;
 }
 
-.note-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+.shadow-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-.card-img-note {
+.card-img-favoris {
     width: 100%;
-    height: 250px;
+    height: 300px;
     object-fit: cover;
+    border-radius: 12px 12px 0 0;
+    transition: transform 0.3s;
+}
+
+.card-img-favoris:hover {
+    transform: scale(1.02);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    flex-grow: 1;
 }
 
 .card-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     margin-bottom: 5px;
+    color: #fff;
 }
 
 .card-text {
-    font-size: 0.9rem;
-    color: #ddd;
+    font-size: 0.85rem;
+    color: #f0f0f0;
+    margin-bottom: 10px;
 }
 
-/* ===== BOUTONS ===== */
-.btn {
-    border-radius: 8px;
+/* ================= BOUTONS ================= */
+.card .btn {
+    font-size: 0.75rem;
     font-weight: 600;
-    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 4px 10px;
+    transition: background 0.2s;
 }
 
-.btn-sm {
-    padding: 4px 8px;
+.card .btn-outline-light {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: none;
 }
 
-/* ===== RESPONSIVE ===== */
+.card .btn-outline-light:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.card .btn-danger {
+    background: #d9534f;
+    color: #fff;
+    border: none;
+}
+
+.card .btn-danger:hover {
+    background: #c9302c;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+    .card { max-width: 200px; }
+    .card-img-favoris { height: 280px; }
+}
+
 @media (max-width: 992px) {
-    .card-img-note {
-        height: 200px;
-    }
+    .card { max-width: 180px; }
+    .card-img-favoris { height: 260px; }
 }
 
 @media (max-width: 768px) {
-    .card-img-note {
-        height: 180px;
-    }
+    .card { max-width: 160px; }
+    .card-img-favoris { height: 240px; }
+    .card-title { font-size: 0.95rem; }
+    .card .btn { font-size: 0.7rem; padding: 3px 8px; }
 }
 
 @media (max-width: 576px) {
-    .card-img-note {
-        height: 150px;
-    }
+    .card { max-width: 140px; }
+    .card-img-favoris { height: 220px; }
+    .card-title { font-size: 0.9rem; }
+    .card .btn { font-size: 0.65rem; padding: 3px 6px; }
+}
+
+/* ================= MARGES ================= */
+.container {
+    padding-top: 20px;
+    padding-bottom: 40px;
 }

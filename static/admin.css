@@ -1,0 +1,79 @@
+/* ===== BODY ===== */
+body {
+    background-color: #1c1c2e;
+    color: #ffffff; /* Texte général en blanc */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== CARDS STATS ===== */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    color: #ffffff; /* texte dans les cards en blanc */
+}
+
+.card h4, .card p {
+    color: #ffffff; /* renforce le texte en blanc */
+    font-weight: 600;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    color: #ffffff; /* texte des boutons en blanc */
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+/* ===== LIST-GROUP ===== */
+.list-group-item {
+    background-color: #2a2a40;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    color: #ffffff; /* texte en blanc */
+}
+
+.list-group-item:hover {
+    background-color: #3a3a55;
+}
+
+/* ===== BADGES ===== */
+.badge {
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: #000000; /* texte sur badge admin jaune en noir */
+}
+
+/* ===== TITRES ===== */
+h1, h3 {
+    color: #ffffff; /* titres en blanc */
+}
+
+/* ===== FORMS INLINE ===== */
+form {
+    display: inline;
+    color: #ffffff; /* texte dans formulaire en blanc */
+}
+/* Bouton "Retour au site" avec texte noir */
+.btn-return {
+    color: #000000 !important; /* texte en noir */
+    background-color: #ffffff; /* fond blanc pour bien contraster */
+    border: none;
+}
+
+.btn-return:hover {
+    background-color: #e0e0e0;
+    color: #000000 !important;
+}

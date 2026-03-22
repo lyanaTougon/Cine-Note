@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from pymongo import MongoClient
 from bson import ObjectId
+from flask import Flask, render_template, redirect, url_for, request, session, flash
+from bson.objectid import ObjectId
 import hashlib
 
 app = Flask(__name__)
@@ -19,7 +21,7 @@ films_carrousel = [
      "description": "Jake Sully et Neytiri affrontent une nouvelle menace sur Pandora dans un monde encore plus spectaculaire.",
      "color1": "#000428", "color2": "#1A0033", "note": 9},
      
-    {"id": "wicked-1", "title": "Wicked 1", "url": "/films/wicked-1", "image": "wicked1.jpg",
+    {"id": "wicked-1", "title": "Wicked 1", "url": "/films/wicked1", "image": "wicked1.jpg",
      "description": "Une aventure magique dans un monde enchanteur.",
      "color1": "#FF69B4", "color2": "#008000", "note": 9.0},
     {"id": "ballerina", "title": "Ballerina", "url": "/films/ballerina", "image": "ballerina.webp",
@@ -28,11 +30,12 @@ films_carrousel = [
 ]
 
 films_recents = [
-    {"id": "zootopie2", "title": "Zootopie 2", "url": "/films/zootopie2", "image": "zootopie2_couv.jpg", "note": 8.8},
+    {"id": "wicked1", "title": "Wicked 1", "url": "/films/wicked1", "image": "wicked1_couv.jpg"},
 ]
 
 films_avenir = [
-    {"id": "parasite", "title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp", "note": 8.7},
+{"id": "parasite", "title": "Parasite", "url": "/films/parasite", "image": "parasite_couv.webp"},
+    
 ]
 
 films_a_decouvrir = [
@@ -41,7 +44,7 @@ films_a_decouvrir = [
      {
   "id": "robot_sauvage",
   "title": "Robot Sauvage",
-  "url": "/films/robot-sauvage",
+  "url": "/films/robot_sauvage",
   "image": "robotsauvage_couv.jpg",
   "genres": ["Action", "Aventure"],
   "note": 8.3
@@ -102,7 +105,7 @@ films_details = [
   "synopsis": "Dans ce troisième volet de la franchise, Jake Sully, Neytiri et leur famille doivent faire face à l’alliance agressive d’une tribu Na’vi des Cendres tout en protégeant Pandora contre les forces humaines qui menacent leur monde.",
   "date": "2025",
   "duree": "3h 17m",
-  "trailer": "https://youtu.be/ouVuXBtxk9M?si=H2I7SZUEWFISb4WD"
+  "trailer": "https://youtu.be/7XSH2NQ2efI?si=_6gZe3MjEouu9LGJ"
 },
 {
   "id": "robot_sauvage",
@@ -138,7 +141,7 @@ films_details = [
         "synopsis": "Une assassine traque ceux qui ont détruit sa vie.",
         "date": "2025",
         "duree": "1h50",
-        "trailer": "hhttps://youtu.be/0FSwsrFpkbw?si=3Bmx4M3rqwfTo_y9"
+        "trailer": "https://youtu.be/0FSwsrFpkbw?si=gsEDXiwzMST69YHh"
     },
 {
   "id": "parasite",
@@ -180,10 +183,27 @@ def index():
 
 @app.route('/films')
 def films_page():
-    all_films = films_details
+    all_films = films_details.copy()  # copie pour ne pas modifier l'original
     featured_film = all_films[0]  # Le premier film de la liste
     all_genres = sorted({g for f in films_details for g in f.get("genres", [])})
-    return render_template('films.html', films=all_films, featured_film=featured_film, all_genres=all_genres)
+
+    # Calcul des moyennes des notes pour chaque film
+    for film in all_films:
+        # Utilise comments_collection, pas notes_collection
+        notes = list(comments_collection.find({"film": film["id"]}))
+        if notes:
+            film['moyenne_note'] = sum(n['note'] for n in notes) / len(notes)
+        else:
+            film['moyenne_note'] = 0
+
+    # Top 5 films triés par note décroissante
+    top5_films = sorted(all_films, key=lambda f: f['moyenne_note'], reverse=True)[:5]
+
+    return render_template('films.html',
+                           films=all_films,
+                           featured_film=featured_film,
+                           all_genres=all_genres,
+                           top5_films=top5_films)
 
 @app.route('/se_connecter', methods=['GET','POST'])
 def se_connecter():
@@ -274,25 +294,41 @@ def delete_note(film_id):
         "film": film_id
     })
     
-    flash("La note a été annulée. 🎬", "success")
+    flash("✅ La note a été annulée. Vous pouvez la remettre depuis la page du film.", "success")
     return redirect(url_for('note'))
 
 
 # -------------------- FILM DETAIL --------------------
 @app.route('/films/<film_id>')
 def film_detail(film_id):
+    # Cherche le film
     film = next((f for f in films_details if f["id"] == film_id), None)
     if not film:
         return "Film introuvable", 404
 
+    # Vérifie si l'utilisateur a mis le film en favoris
     is_favori = False
     if 'user' in session:
         user = users_collection.find_one({"email": session['user']})
         is_favori = any(f["id"] == film_id for f in user.get("favoris", []))
 
-    return render_template("film_detail.html", film=film, is_favori=is_favori)
+    # Récupère toutes les notes pour ce film
+    comments = list(comments_collection.find({"film": film_id}))
 
+    # Calcule la moyenne des notes
+    if comments:
+        moyenne_note = round(sum(c["note"] for c in comments) / len(comments), 1)
+    else:
+        moyenne_note = 0  # Pas encore noté
 
+    # Passe tout au template
+    return render_template(
+        "film_detail.html",
+        film=film,
+        is_favori=is_favori,
+        comments=comments,
+        moyenne_note=moyenne_note
+    )
 # -------------------- FAVORIS --------------------
 @app.route('/toggle_favori/<film_id>')
 def toggle_favori(film_id):
@@ -330,12 +366,22 @@ def noter(film_name):
 
     note = int(request.form.get('note'))
 
-    comments_collection.insert_one({
-        "film": film_name,
-        "user": session['user'],
-        "note": note
-    })
+    existing = comments_collection.find_one({"film": film_name, "user": session['user']})
+    if existing:
+        comments_collection.update_one(
+            {"_id": existing["_id"]},
+            {"$set": {"note": note}}
+        )
+    else:
+        comments_collection.insert_one({
+            "film": film_name,   # <- ici
+            "user": session['user'],  # <- ici
+            "note": note         # <- ici
+        })
+    # 🔥 Flash message pour informer l'utilisateur
+    flash("✅ Votre note a bien été enregistrée ! Vous pouvez la voir dans votre page Note.", "success")
 
+    # Redirige vers la page précédente (film_detail)
     return redirect(request.referrer)
 
 
@@ -364,13 +410,30 @@ def add_film():
 def edit_film(film_id):
     if session.get('role') != 'admin':
         return redirect(url_for('index'))
-    film = films_collection.find_one({"_id": ObjectId(film_id)})
-    if request.method == 'POST':
-        new_title = request.form['title']
-        films_collection.update_one({"_id": ObjectId(film_id)}, {"$set": {"title": new_title}})
-        return redirect(url_for('admin_page'))
-    return render_template('admin/edit_film.html', film=film)
 
+    film = films_collection.find_one({"_id": ObjectId(film_id)})
+
+    if request.method == 'POST':
+        updated_film = {
+            "title": request.form.get("title"),
+            "image": request.form.get("image"),
+            "image_couv": request.form.get("image_couv"),
+            "genres": request.form.get("genres").split(","),
+            "description": request.form.get("description"),
+            "synopsis": request.form.get("synopsis"),
+            "date": request.form.get("date"),
+            "duree": request.form.get("duree"),
+            "trailer": request.form.get("trailer")
+        }
+
+        films_collection.update_one(
+            {"_id": ObjectId(film_id)},
+            {"$set": updated_film}
+        )
+
+        return redirect(url_for('admin_page'))
+
+    return render_template('admin/edit_film.html', film=film)
 
 @app.route('/admin/films/<film_id>/supprimer')
 def delete_film(film_id):
@@ -379,6 +442,24 @@ def delete_film(film_id):
 
     films_collection.delete_one({"_id": ObjectId(film_id)})
     return redirect(url_for('admin_page'))
+
+
+# -------------------- ADMIN STATIQUE --------------------
+STATIC_ADMIN_EMAIL = "admin1@exemple.com"
+
+def create_static_admin():
+    if not users_collection.find_one({"email": STATIC_ADMIN_EMAIL}):
+        users_collection.insert_one({
+            "email": STATIC_ADMIN_EMAIL,
+            "password": generate_password_hash("1234"),
+            "role": "admin"
+        })
+        print("Admin statique créé : admin1@exemple.com / 1234")
+    else:
+        print("Admin statique déjà présent")
+
+create_static_admin()  # <-- Ici, juste après MongoDB et avant les routes
+
 
 # -------------------- ADMIN USERS --------------------
 @app.route('/admin/users/<user_id>/make_admin')
@@ -393,10 +474,32 @@ def make_admin(user_id):
 
     return redirect(url_for('admin_page'))
 
-@app.route('/admin/users/<user_id>/delete')
+@app.route('/admin/users/<user_id>/remove_admin')
+def remove_admin(user_id):
+    if session.get('role') != 'admin':
+        return redirect(url_for('index'))
+
+    user = users_collection.find_one({"_id": ObjectId(user_id)})
+    if user.get("email") == STATIC_ADMIN_EMAIL:
+        return redirect(url_for('admin_page'))
+
+    users_collection.update_one(
+        {"_id": ObjectId(user_id)},
+        {"$set": {"role": "user"}}
+    )
+
+    return redirect(url_for('admin_page'))
+
+# -------------------- SUPPRIMER UN UTILISATEUR --------------------
+@app.route('/admin/users/<user_id>/supprimer', methods=['POST'])
 def delete_user(user_id):
     if session.get('role') != 'admin':
         return redirect(url_for('index'))
+
+    user = users_collection.find_one({"_id": ObjectId(user_id)})
+    if user.get("email") == STATIC_ADMIN_EMAIL:
+        # Ne jamais supprimer l'admin statique
+        return redirect(url_for('admin_page'))
 
     users_collection.delete_one({"_id": ObjectId(user_id)})
     return redirect(url_for('admin_page'))
