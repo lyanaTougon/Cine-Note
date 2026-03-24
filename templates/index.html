@@ -100,15 +100,16 @@
                 <a href="{{ film.url }}">
                     <img src="{{ url_for('static', filename='images/' + film.image) }}" class="card-img-top" alt="{{ film.title }}">
                 </a>
-                <div class="card-body d-flex flex-column justify-content-between" style="height: 130px;">
-                    <div>
-                        <h6 class="card-title">{{ film.title }}</h6>
-                        {% if film.genres %}
-                        <p class="card-genres">{{ film.genres|join(' • ') }}</p>
-                        {% endif %}
-                    </div>
-                    <button class="carousel-btn mt-2" onclick="window.location.href='{{ film.url }}'">Voir</button>
-                </div>
+                <div class="card-body d-flex flex-column" style="padding: 12px;">
+                  <div>
+                    
+                    <h6 class="card-title">{{ film.title }}</h6>
+                    {% if film.genres %}
+                    <p class="card-genres">{{ film.genres|join(' • ') }}</p>
+                    {% endif %}
+                  </div>
+                  <button class="carousel-btn mt-2" onclick="window.location.href='{{ film.url }}'">Voir</button>
+</div>
             </div>
             {% endfor %}
         </div>

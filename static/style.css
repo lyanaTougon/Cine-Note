@@ -65,25 +65,78 @@ body {
 }
 
 /* ==== CARDS ==== */
+/* Carte Film avec bouton toujours visible, même si le titre est long */
 .card {
     background-color: rgba(255,255,255,0.06);
     color:#eaeaea;
     border-radius:12px;
     transition:transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);  /* flou global */
+    overflow: hidden;             /* empêche le contenu de dépasser */
+    display: flex;
+    flex-direction: column;
 }
-.card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
-.card img { height:250px; object-fit:cover; border-radius:12px; transition:0.3s; }
-.card img:hover { transform:scale(1.02); }
-.card-body .card-title { font-size:1.2rem; font-weight:700; color:#fff; }
-.card-genres { font-size:0.9rem; font-weight:400; color:#ccc; margin-top:-3px; }
-.card-body .carousel-btn {
-    font-size:0.85rem; font-weight:600; background:rgba(255,255,255,0.9); color:#000;
-    border:none; padding:5px 12px; border-radius:5px; cursor:pointer; width:100%; transition:background 0.2s;
-}
-.card-body .carousel-btn:hover { background:rgba(255,255,255,1); }
 
+.card:hover { 
+    transform:translateY(-3px); 
+    box-shadow:0 8px 20px rgba(0,0,0,0.3); 
+}
+
+.card img { 
+    height:250px; 
+    object-fit:cover; 
+    border-radius:12px; 
+    transition:0.3s; 
+}
+
+.card img:hover { 
+    transform:scale(1.02); 
+}
+
+/* Corps de la carte qui s'adapte au contenu */
+.card-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;          /* espace entre titre, genres et bouton */
+}
+
+/* Titre et genres */
+.card-body .card-title { 
+    font-size:1.2rem; 
+    font-weight:700; 
+    color:#fff; 
+}
+
+.card-genres { 
+    font-size:0.9rem; 
+    font-weight:400; 
+    color:#ccc; 
+    margin-top:0; 
+}
+
+/* Bouton Voir */
+.card-body .carousel-btn {
+    font-size:0.85rem;
+    font-weight:600;
+    background:rgba(255,255,255,0.9);
+    color:#000;
+    border:none;
+    padding:5px 12px;
+    border-radius:5px;
+    cursor:pointer;
+    width:100%;
+    transition:background 0.2s;
+    backdrop-filter: blur(10px); /* bouton intégré dans le flou */
+    margin-top: 0;               /* bouton juste sous le texte */
+}
+.card-body .carousel-btn:hover { 
+    background:rgba(255,255,255,1); 
+}
 /* ==== CAROUSEL ==== */
 .carousel-item img { max-height:450px; object-fit:cover; border-radius:12px; }
+
+
 .carousel-caption-left { position:absolute; bottom:10px; left:10px; text-align:left; max-width:50%; }
 .carousel-caption-left h5 { font-size:1.7rem; font-weight:700; color:#f5f5f5; text-shadow:0 0 3px rgba(0,0,0,0.5); }
 .carousel-caption-left p { font-size:1rem; font-weight:500; color:#f0f0f0; text-shadow:0 0 2px rgba(0,0,0,0.3); }
